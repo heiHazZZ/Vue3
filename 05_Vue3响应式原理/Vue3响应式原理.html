@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let person = {
+      name:'张三',
+      age:18
+    }
+    // 模拟Vue2中实现响应式
+    // #region
+    /*let p = {}
+    Object.defineProperty(p,'name',{
+      configurable:true,
+      get(){
+        // 有人读取时name调用
+        return person.name
+      },
+      set(value){
+        // 有人修改name时调用
+        console.log('有人修改了name属性，我要去更新界面了');
+        person.name = value
+      }
+    })
+    Object.defineProperty(p,'age',{
+      configurable:true,
+      get(){
+        // 有人读取时name调用
+        return person.age
+      },
+      set(value){
+        // 有人修改age时调用
+        console.log('有人修改了age属性，我要去更新界面了');
+        person.age = value
+      }
+    })*/
+    // #endregion
+
+    // 模拟Vue3中实现响应式
+    const p = new Proxy(person,{
+      // 有人读取p的某个属性时调用
+      // target 和 propName 为固定形参，target是映射的对象即（person对象）
+      // propName为 get或set等 监测或修改的对象里的具体属性
+      get(target,propName){
+        console.log(`有人读取了p身上的的${propName}属性,我要去更新界面了`);
+        return Reflect.get(target,propName) // [] 可以调用形参，(.)只能调用实参
+      },
+      // 有人修改p的某个属性 或 给p添加属性 时调用
+      set(target,propName,value){
+        console.log(`有人修改了p身上的的${propName}属性,我要去更新界面了`);
+        Reflect.set(target,propName,value)
+      },
+      // 有人删除p某个属性时调用
+      deleteProperty(target,propName){
+        console.log(`有人删除了p身上的的${propName}属性,我要去更新界面了`);
+        return Reflect.deleteProperty(target,propName)
+      }
+    })
+
+
+    let obj = {a:1,b:2}
+    // 通过object.defineproperty去操作
+    // 有错误会立刻抛出，并且终止代码，不利于框架
+    /*try {
+      Object.defineProperty(obj,'c',{
+        get(){
+          return 3
+        },
+      })
+      Object.defineProperty(obj,'c',{
+        get(){
+          return 4
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }*/
+
+    // 通过Reflect.defineproperty去操作
+    // 有错误不会终止代码，且错误信息要用值去接受
+    /*const x1 = Reflect.deleteProperty(obj,'c',{
+      get(){
+        return 3
+      }
+    })
+    const x2 = Reflect.defineProperty(obj,'c',{
+      get(){
+        return 4
+      }
+    })
+    if(x2) {
+      console.log('操作成功');
+    } else{
+      console.log('操作失败');
+    } */
+  </script>
+</body>
+</html>
