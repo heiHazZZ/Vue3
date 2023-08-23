@@ -76,16 +76,11 @@ npm run serve
 vite官网：https://vitejs.cn/
 
 - 什么是vite？——新一代前端构架工具
-
 - 优势如下：
 
   - 开发环境中，无需打包操作，可快速的冷启动
   - 轻量快捷的热重载（HMP）
   - 真正的按需编译，不在等待整个应用编译完成
-
-- 传统构建 与 vite构建对比
-
-  <img src="../../../Program Files (x86)/typora/img/image-20230213171252529.png" alt="image-20230213171252529" style="zoom: 67%;" /><img src="../../../Program Files (x86)/typora/img/image-20230213171401044.png" alt="image-20230213171401044" style="zoom:67%;" />
 
 ```bash
 ## 创建工程
